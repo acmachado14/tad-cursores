@@ -23,7 +23,7 @@ int* getPid(Processo *processo) {
     return processo->pid;
 }
 
-void setPrioridade(Processo *processo, char *prioridade) {
+void setPrioridade(Processo *processo, int *prioridade) {
     processo->prioridade = prioridade;
 }
 

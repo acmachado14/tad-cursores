@@ -4,7 +4,7 @@
 typedef struct {
     int pid;
     int prioridade;
-    double horas; //horas podem ser do tipo char, avaliar possibilidade!
+    double horas;
 } Processo;
 
 Processo createProcess(int *pid, int *prioridade, double *horas);
