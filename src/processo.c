@@ -1,40 +1,53 @@
 #include "processo.h"
+#include <time.h>
 
-Processo createProcess(int *pid, int *prioridade, double *horas){
-    Processo processo;
-    setPid(&processo, pid);
-    setPrioridade(&processo, prioridade);
-    setHoras(&processo, horas);
-    return processo;
+void createProcess(Processo *processo){
+    srand(time(NULL));
+    setPid(processo);
+    setPrioridade(processo);
+    setHoras(processo);
 }
 
 void imprimeProcesso(Processo *processo) {
     printf("\nProcesso:\n");
-    printf(" -> PID: %s\n", getPid(processo));
-    printf(" -> Prioridade: %s\n", getPrioridade(processo));
-    printf(" -> Horário da criação: %s\n", getHoras(processo));
+    printf(" -> PID: %d\n", getPid(processo));
+    printf(" -> Prioridade: %d\n", getPrioridade(processo));
+    printf(" -> Horario da criacao: %s\n", getHoras(processo));
 }
 
-void setPid(Processo *processo, int *pid) {
-    processo->pid = pid;
+//gera um numero aleatorio de 0 a 1000
+void setPid(Processo *processo) {
+    processo->pid = (rand() % 1000);
 }
 
-int* getPid(Processo *processo) {
+int getPid(Processo *processo) {
     return processo->pid;
 }
 
-void setPrioridade(Processo *processo, int *prioridade) {
-    processo->prioridade = prioridade;
+//gera um numero aleatorio de 0 a 5
+void setPrioridade(Processo *processo) {
+    processo->prioridade = ((rand() % 5) + (1));
 }
 
-int* getPrioridade(Processo *processo) {
+int getPrioridade(Processo *processo) {
     return processo->prioridade;
 }
 
-void setHoras(Processo *processo, double *horas) {
-    processo->horas = horas;
+//pega a hora atual
+void setHoras(Processo *processo) {
+    time_t my_time;
+    struct tm * timeinfo;
+    time (&my_time);
+    timeinfo = localtime (&my_time);
+    float hora = timeinfo->tm_hour;
+    float minutos = timeinfo->tm_min;
+    char convertido[16];
+
+    sprintf(convertido, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);
+
+    strcpy(processo->horas, convertido);
 }
 
-double* getHoras(Processo *processo) {
+char* getHoras(Processo *processo) {
     return processo->horas;
 }

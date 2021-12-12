@@ -4,21 +4,21 @@
 typedef struct {
     int pid;
     int prioridade;
-    double horas;
+    char horas[5];
 } Processo;
 
-Processo createProcess(int *pid, int *prioridade, double *horas);
+void createProcess(Processo *processo);
 
 void imprimeProcesso(Processo *processo);
 
-void setPid(Processo *processo, int *pid);
+void setPid(Processo *processo);
 
-int* getPid(Processo *processo);
+int getPid(Processo *processo);
 
-void setPrioridade(Processo *processo, int *prioridade);
+void setPrioridade(Processo *processo);
 
-int* getPrioridade(Processo *processo);
+int getPrioridade(Processo *processo);
 
-void setHoras(Processo *processo, double *horas);
+void setHoras(Processo *processo);
 
-double* getHoras(Processo *processo);
+char* getHoras(Processo *processo);
