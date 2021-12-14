@@ -4,45 +4,51 @@
 #include "lista.h"
 
 //Inicializar a lista
-Lista *criar_lista(){
-  Lista *lista = (Lista*) malloc(sizeof(Lista));
-
-  lista -> tam = 0;
-  lista -> inicio = NULL;
-
+Lista* criar_lista(int tamanho){
+  Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
+  Lista *lista;
+  lista -> vetor = v;
+  lista -> vazia = true;
   return lista;
 }
 
-/*
-//Inserir no inicio
-void inseri_no_inicio(Lista *lista, Processo processo){
-  Celula *celula = (Celula*) malloc(sizeof(Celula));
+Lista* insere_no_inicio(Lista *lista, Processo *processo){
 
-  celula -> processo = processo;
-  celula -> prox = lista -> inicio;
-  celula -> ant = NULL;
-  lista -> inicio = celula;
-  lista -> tam++;
+  Celula *cel;
+  cel->processo = processo;
+  if (lista->vazia == true){
+    cel->ant = -1;
+    cel->prox = -1;
+    lista->posicao = 0;
+    lista->vetor[lista->posicao] = *cel;
+    lista->vazia = false;
+    puts("Sal");
+  }else{
+    cel->ant = lista->posicao;
+    cel->prox = -1;
+    lista->posicao++;
+    lista->vetor[lista->posicao] = *cel;
+    puts("Sal");
+  }
+  puts("Sal");
+  return lista;
 }
-*/
+
 
 //Imprimir
 void imprimir(Lista *lista){
-  if(verifica_lista_vazia (lista)){
-    printf("Lista vazia\n");
-    return;
+
+  for (int i =0; i < lista->posicao +1; i++){
+    Celula *cel;
+    *cel = lista -> vetor[i];
+    Processo *pro = cel->processo;
+    imprimeProcesso(pro);
   }
-
-  Celula *apontador = lista -> inicio;
-
-  while (apontador != NULL){
-    printf("%d", apontador -> processo.pid);
-    apontador = apontador -> prox;
-  }
-
   printf("\n");
 }
 
+
+/*
 //Verifica se a lista está vazia
 bool verifica_lista_vazia(Lista *lista){
   return (lista -> tam == 0);
@@ -91,4 +97,4 @@ void insere_ordenado(Lista *lista, Processo processo){
 //Tamanho da lista
 int *celulas_ocupadas(Lista *lista){
   printf("%d", lista -> tam);
-}
+}*/
