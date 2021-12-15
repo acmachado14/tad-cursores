@@ -19,10 +19,10 @@ typedef struct{
 }Lista;
 
 
-Lista* insere_no_inicio(Lista *lista, Processo *processo);
+void insere_no_inicio(Lista **lista, Processo *processo);
 
 //a) Criar uma área de memória interna vazia. Aloca um vetor de células de tamanho N. Vamos utilizar alocação dinâmica deste vetor, devido aos altos valores de N que adotaremos;
-Lista* criar_lista( int tamanho);
+void criar_lista(Lista **lista,int tamanho);
 
 //b) Obter o número de células ocupadas na área de memória. Retorna o número de posições ocupadas no vetor;
 
@@ -41,7 +41,7 @@ void inseri_no_inicio(Lista *lista, Processo processo);
 void remove_primeiro(Lista *lista);
 
 //f) Imprimir o conteúdo da área de memória. Somente imprime o conteúdo das células ocupadas.
-void imprimir(Lista *lista);
+void imprimir(Lista **lista, int pose);
 
 //Verifica se alista estar vazia
 bool verifica_lista_vazia(Lista *lista);

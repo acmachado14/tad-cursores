@@ -4,46 +4,43 @@
 #include "lista.h"
 
 //Inicializar a lista
-Lista* criar_lista(int tamanho){
+void criar_lista(Lista **lista,int tamanho){
+  (*lista) = (Lista*) malloc(sizeof(Lista));
   Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
-  Lista *lista;
-  lista -> vetor = v;
-  lista -> vazia = true;
-  return lista;
+  (*lista) -> vetor = v;
+  (*lista) -> vazia = true;
 }
 
-Lista* insere_no_inicio(Lista *lista, Processo *processo){
+void insere_no_inicio(Lista **lista, Processo *processo){
 
   Celula *cel;
   cel->processo = processo;
-  if (lista->vazia == true){
+  if ((*lista)->vazia == true){
     cel->ant = -1;
     cel->prox = -1;
-    lista->posicao = 0;
-    lista->vetor[lista->posicao] = *cel;
-    lista->vazia = false;
-    puts("Sal");
+    (*lista)->posicao = 0;
+    (*lista)->vetor[(*lista)->posicao] = *cel;
+    (*lista)->vazia = false;
   }else{
-    cel->ant = lista->posicao;
+    cel->ant = (*lista)->posicao;
     cel->prox = -1;
-    lista->posicao++;
-    lista->vetor[lista->posicao] = *cel;
-    puts("Sal");
+    (*lista)->vetor[(*lista)->posicao] = *cel;
   }
-  puts("Sal");
-  return lista;
+  (*lista)->posicao++;
+  puts("");
+  //printf("%d", (*lista)->vetor[(*lista)->posicao].processo->pid);
 }
 
 
 //Imprimir
-void imprimir(Lista *lista){
+void imprimir(Lista **lista, int pose){
+  //printf("%d", (*lista)->vetor[0].processo->pid);
+  Celula *cel;
+  Processo *pro;
+  *cel = (*lista)-> vetor[pose];
+  pro = cel->processo;
+  imprimeProcesso(pro);
 
-  for (int i =0; i < lista->posicao +1; i++){
-    Celula *cel;
-    *cel = lista -> vetor[i];
-    Processo *pro = cel->processo;
-    imprimeProcesso(pro);
-  }
   printf("\n");
 }
 

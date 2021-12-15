@@ -16,7 +16,6 @@ void imprimeProcesso(Processo *processo) {
 
 //gera e seta um numero aleatorio de 0 a 1000
 void setPid(Processo *processo) {
-    srand(time(NULL));
     processo->pid = (rand() % 1000);
 }
 
@@ -26,7 +25,6 @@ int getPid(Processo *processo) {
 
 //gera um numero aleatorio de 0 a 5
 void setPrioridade(Processo *processo) {
-    srand(time(NULL));
     processo->prioridade = ((rand() % 5) + (1));
 }
 
@@ -36,7 +34,6 @@ int getPrioridade(Processo *processo) {
 
 //pega a hora atual
 void setHoras(Processo *processo) {
-    srand(time(NULL));
     time_t my_time;
     struct tm * timeinfo;
     time (&my_time);
