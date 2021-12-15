@@ -3,7 +3,7 @@
 #include <string.h>
 #include "lista.h"
 
-//Inicializar a lista
+//Inicializar a lista e aloca a memória no HEAP
 void criar_lista(Lista **lista,int tamanho){
   (*lista) = (Lista*) malloc(sizeof(Lista));
   Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
