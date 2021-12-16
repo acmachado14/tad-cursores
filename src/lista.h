@@ -5,10 +5,11 @@
 #include "processo.h"
 
 //Struct da Celula -> Para representarmos um Nó da lista
+
 typedef struct Celula{
   Processo *processo;
-  int prox;
-  int ant;
+  int prox;     //cursor para proximo
+  int ant;      //cursor para anterior
 } Celula;
 
 //Struct da lista
@@ -25,23 +26,24 @@ void insere_no_inicio(Lista **lista, Processo *processo);
 void criar_lista(Lista **lista,int tamanho);
 
 //b) Obter o número de células ocupadas na área de memória. Retorna o número de posições ocupadas no vetor;
-
-int *celulas_ocupadas(Lista *lista);
+int celulas_ocupadas(Lista **lista);
 
 //c) Inserir um item de dado na área interna de memória, mantendo os itens ordenados;
-//Insere ordenado
 void insere_ordenado(Lista *lista, Processo processo);
+
+//d) Retirar o primeiro item da área de memória;
+void remove_primeiro(Lista **lista);
+
 
 /*
 //Insere no inicio
 void inseri_no_inicio(Lista *lista, Processo processo);
 */
 
-//d) Retirar o primeiro item da área de memória;
-void remove_primeiro(Lista *lista);
+
 
 //f) Imprimir o conteúdo da área de memória. Somente imprime o conteúdo das células ocupadas.
-void imprimir(Lista **lista, int pose);
+void imprimir(Lista **lista);
 
 //Verifica se alista estar vazia
 bool verifica_lista_vazia(Lista *lista);
