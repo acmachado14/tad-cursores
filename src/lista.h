@@ -37,7 +37,7 @@ void remove_primeiro(Lista **lista);
 
 /*
 //Insere no inicio
-void inseri_no_inicio(Lista *lista, Processo processo);
+void inserir_no_inicio(Lista *lista, Processo processo);
 */
 
 

@@ -37,7 +37,24 @@ void insere_no_inicio(Lista **lista, Processo *processo){
   (*lista)->tam++;
   puts("");
 }
-
+      // Código para ordenação do vetor (Não testado) Erro ao definir função na lista.h
+void ordena(int *vetor, int *tam){
+  
+  int primeiro, j, menor, troca;
+  for (primeiro = 0; primeiro < tam-1; primeiro++){
+    menor = primeiro;
+    for (j = primeiro+1; j < tam-1 ; j++){
+      if(vetor[j] < vetor[menor]){
+        menor = j;
+      }
+    if (primeiro != menor){
+      troca = vetor[primeiro];
+      vetor[primeiro] = vetor[menor];
+      vetor[menor] = troca;
+    }
+    }
+  }
+}
 
 //Imprimir
 void imprimir(Lista **lista){
