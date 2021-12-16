@@ -9,39 +9,57 @@ void criar_lista(Lista **lista,int tamanho){
   Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
   (*lista) -> vetor = v;
   (*lista) -> vazia = true;
+  (*lista) -> posicao = 0;
+  (*lista) -> tam = 0;
 }
 
 void insere_no_inicio(Lista **lista, Processo *processo){
-
+  /*for (int i = 0; i < 10; i++){
+    printf("teste");
+    printf("\n");
+  }*/
   Celula *cel;
   cel->processo = processo;
   if ((*lista)->vazia == true){
     cel->ant = -1;
     cel->prox = -1;
-    (*lista)->posicao = 0;
     (*lista)->vetor[(*lista)->posicao] = *cel;
     (*lista)->vazia = false;
+    (*lista)->ultimo = (*lista)->posicao;
+    (*lista)->primeiro = (*lista)->posicao;
   }else{
     cel->ant = (*lista)->posicao;
     cel->prox = -1;
     (*lista)->vetor[(*lista)->posicao] = *cel;
+    (*lista)->ultimo = (*lista)->posicao;
   }
   (*lista)->posicao++;
+  (*lista)->tam++;
   puts("");
-  //printf("%d", (*lista)->vetor[(*lista)->posicao].processo->pid);
 }
 
 
 //Imprimir
-void imprimir(Lista **lista, int pose){
-  //printf("%d", (*lista)->vetor[0].processo->pid);
-  Celula *cel;
-  Processo *pro;
-  *cel = (*lista)-> vetor[pose];
-  pro = cel->processo;
-  imprimeProcesso(pro);
+void imprimir(Lista **lista){
+
+  for (int i = 0; i < (*lista)->posicao; i++){
+    imprimeProcesso((*lista)-> vetor[i].processo);
+  }
 
   printf("\n");
+}
+
+int celulas_ocupadas(Lista **lista){
+  return (*lista)->posicao;
+}
+
+
+//Remove inicio
+void remove_primeiro(Lista **lista){
+  Celula *cel;
+  cel = NULL;
+  //(*lista) -> vetor[(*lista) -> primeiro] = cel;
+  (*lista) -> tam--;
 }
 
 
@@ -51,16 +69,7 @@ bool verifica_lista_vazia(Lista *lista){
   return (lista -> tam == 0);
 }
 
-//Remove inicio
-void remove_primeiro(Lista *lista){
-  if(!verifica_lista_vazia (lista)){
-   Celula *apontador = lista -> inicio;
 
-   lista -> inicio = apontador -> prox;
-   free (apontador);
-   lista -> tam--;
-  }
-}
 
 //Insere ordenado
 void insere_ordenado(Lista *lista, Processo processo){

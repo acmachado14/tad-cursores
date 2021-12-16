@@ -22,9 +22,13 @@ int main(){
     insere_no_inicio(&lista, &p2);
     insere_no_inicio(&lista, &p3);
 
-    for (int i = 0; i < 3; i++){
-        imprimir(&lista,i);
-    }
+
+    imprimir(&lista);
+    puts("----------------------------------------------------------------");
+    printf("Numero de celulas ocupadas: %d",celulas_ocupadas(&lista));
+
+
+
 
 
 /*
