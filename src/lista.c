@@ -55,27 +55,39 @@ void insere_no_inicio(Lista **lista, Processo *processo){
 
 //Imprimir
 void imprimir(Lista **lista){
-
+  int aux = (*lista)->primeiro;
   for (int i = 0; i < (*lista)->posicao; i++){
-    imprimeProcesso((*lista)-> vetor[i].processo);
+    imprimeProcesso((*lista)-> vetor[i].processo); // imprime desordenado
+    //imprimeProcesso((*lista)-> vetor[aux].processo); // imprime ordenado
+    aux = (*lista)-> vetor[aux].prox;
   }
-
   printf("\n");
 }
 
+//Celulas ocupadas
 int celulas_ocupadas(Lista **lista){
   return (*lista)->posicao;
 }
 
-
-//Remove inicio
-void remove_primeiro(Lista **lista){
+//Remove no inicio
+Lista* remove_primeiro(Lista **lista){
+  if ((*lista) -> vazia = true)
+    printf("Lista vazia!%n");
+  
   Celula *cel;
-  cel = NULL;
-  //(*lista) -> vetor[(*lista) -> primeiro] = cel;
+
+  cel = (*lista)->vetor;
+  int aux;
+
+  if ((*lista) -> tam > 1){
+    aux = (*lista)-> vetor[(*lista)->primeiro].prox;
+    (*lista)-> vetor[aux].ant = -1;
+    (*lista)->primeiro = aux;
+  }
+
+  free (cel);
   (*lista) -> tam--;
 }
-
 
 /*
 //Verifica se a lista está vazia

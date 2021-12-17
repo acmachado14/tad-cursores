@@ -33,7 +33,7 @@ int celulas_ocupadas(Lista **lista);
 void insere_ordenado(Lista *lista, Processo processo);
 
 //d) Retirar o primeiro item da área de memória;
-void remove_primeiro(Lista **lista);
+Lista* remove_primeiro(Lista **lista);
 
 
 /*
