@@ -13,7 +13,7 @@ int main(){
 
     createProcess(&p3);
 
-    int N = 5, linhas;
+    int N = 10, linhas;
     Lista *lista;
     criar_lista(&lista,N);
 
@@ -26,8 +26,6 @@ int main(){
     imprimir(&lista);
     puts("----------------------------------------------------------------");
     printf("Numero de celulas ocupadas: %d",celulas_ocupadas(&lista));
-
-
 
 
 

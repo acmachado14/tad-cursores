@@ -10,6 +10,7 @@ typedef struct Celula{
   Processo *processo;
   int prox;     //cursor para proximo
   int ant;      //cursor para anterior
+  int posicaoVazia; // 0 - vazia | 1 - preenchida
 } Celula;
 
 //Struct da lista

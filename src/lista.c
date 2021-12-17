@@ -7,35 +7,49 @@
 void criar_lista(Lista **lista,int tamanho){
   (*lista) = (Lista*) malloc(sizeof(Lista));
   Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
+
+  Celula *cel = (Celula*) malloc(sizeof(Celula));
+  for (int i = 0; i < tamanho; i++){
+    cel->ant = -1;
+    cel->prox = -1;
+    cel->posicaoVazia = 0;
+    v[i] = *cel;
+  }
+
   (*lista) -> vetor = v;
   (*lista) -> vazia = true;
   (*lista) -> posicao = 0;
-  (*lista) -> tam = 0;
+  (*lista) -> tam = tamanho;
 }
 
 void insere_no_inicio(Lista **lista, Processo *processo){
-  /*for (int i = 0; i < 10; i++){
-    printf("teste");
-    printf("\n");
-  }*/
-  Celula *cel;
+
+  Celula *cel = (Celula*) malloc(sizeof(Celula));
   cel->processo = processo;
+
+  int aux = 0;
+  int insercaoPosicao;
+  for (int i = 0; i < (*lista)->tam; i++){
+      if(((*lista)->vetor[i].posicaoVazia == 0 && (aux == 0))){
+        (*lista)->vetor[i] = *cel;
+        (*lista)->vetor[i].posicaoVazia = 1;
+        aux = 1;
+        insercaoPosicao = i;
+      }
+  }
+
+
   if ((*lista)->vazia == true){
-    cel->ant = -1;
-    cel->prox = -1;
     (*lista)->vetor[(*lista)->posicao] = *cel;
     (*lista)->vazia = false;
     (*lista)->ultimo = (*lista)->posicao;
     (*lista)->primeiro = (*lista)->posicao;
   }else{
-    cel->ant = (*lista)->posicao;
-    cel->prox = -1;
+
     (*lista)->vetor[(*lista)->posicao] = *cel;
     (*lista)->ultimo = (*lista)->posicao;
   }
   (*lista)->posicao++;
-  (*lista)->tam++;
-  puts("");
 }
 
 
