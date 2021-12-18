@@ -20,113 +20,145 @@ void criar_lista(Lista **lista,int tamanho){
   (*lista) -> vazia = true;
   (*lista) -> posicao = 0;
   (*lista) -> tam = tamanho;
+
 }
 
 void insere_no_inicio(Lista **lista, Processo *processo){
 
   Celula *cel = (Celula*) malloc(sizeof(Celula));
   cel->processo = processo;
+  cel->ant = -1;
+  cel->prox = -1;
 
-  int aux = 0;
-  int insercaoPosicao;
-  for (int i = 0; i < (*lista)->tam; i++){
-      if(((*lista)->vetor[i].posicaoVazia == 0 && (aux == 0))){
-        (*lista)->vetor[i] = *cel;
-        (*lista)->vetor[i].posicaoVazia = 1;
-        aux = 1;
-        insercaoPosicao = i;
-      }
-  }
+  int posicaoDoUltimo = (*lista)->ultimo;
+  int posicaoDoPrimeiro = (*lista)->primeiro;
 
-
-  if ((*lista)->vazia == true){
-    (*lista)->vetor[(*lista)->posicao] = *cel;
-    (*lista)->vazia = false;
-    (*lista)->ultimo = (*lista)->posicao;
-    (*lista)->primeiro = (*lista)->posicao;
+  if ( (*lista)->vazia == true){
+    (*lista)->vetor[0] = *cel;
+    (*lista)->primeiro = 0;
+    (*lista)->ultimo = 0;
+    (*lista)->vetor[0].posicaoVazia = 1; //posicao do vetor nao esta mais vazia
+    (*lista)->vazia = false; //lista nao esta mais vazia
   }else{
+    //verificar se vai ser o ultimo
+    if (processo->pid >= (*lista)->vetor[posicaoDoUltimo].processo->pid){ //entao é o maior
 
-    (*lista)->vetor[(*lista)->posicao] = *cel;
-    (*lista)->ultimo = (*lista)->posicao;
+      for (int i = 0; i < (*lista)->tam; i++){
+        if ((*lista)->vetor[i].posicaoVazia == 0){
+
+          cel->ant = posicaoDoUltimo;
+          cel->prox = -1;
+          cel->posicaoVazia = 1;
+
+          (*lista)->vetor[posicaoDoUltimo].prox = i;
+          (*lista)->ultimo = i;
+          (*lista)->vetor[i] = *cel;
+
+          break;
+        }
+      }
+    }else if (processo->pid <= (*lista)->vetor[posicaoDoPrimeiro].processo->pid){ //entao é o menor
+
+      for (int i = 0; i < (*lista)->tam; i++){
+        if ((*lista)->vetor[i].posicaoVazia == 0){
+
+          cel->ant = -1;
+          cel->prox = posicaoDoPrimeiro;
+          cel->posicaoVazia = 1;
+
+          (*lista)->vetor[posicaoDoPrimeiro].ant = i;
+          (*lista)->primeiro = i;
+          (*lista)->vetor[i] = *cel;
+          break;
+        }
+      }
+    }
   }
-  (*lista)->posicao++;
+
+  if((*lista)->vazia == false){
+    if (processo->pid < (*lista)->vetor[(*lista)->ultimo].processo->pid){
+      if (processo->pid > (*lista)->vetor[(*lista)->primeiro].processo->pid){
+        int c;
+        for (int i = 0; i < (*lista)->tam; i++){
+          if ((*lista)->vetor[i].posicaoVazia == 1){
+            int anterior = (*lista)->vetor[i].ant;
+            if ((processo->pid <= (*lista)->vetor[i].processo->pid) && (processo->pid >= (*lista)->vetor[anterior].processo->pid)){
+              for (int j = 0; j < (*lista)->tam; j++){
+                if ((*lista)->vetor[j].posicaoVazia == 0){
+
+                  cel->posicaoVazia = 1; // cola a posicao como preenchida
+
+                  c = (*lista)->vetor[i].ant; // pegando a posicao de $c (proximo de $b)
+
+                  (*lista)->vetor[i].ant = j; //anterior de $b recebe $a
+
+                  cel->prox = i; // proximo de $a recebe $b
+
+                  (*lista)->vetor[c].prox = j; //proximo de $c recebe $a
+
+                  cel->ant = c; //anterior de $a recebe $b
+
+                  (*lista)->vetor[j] = *cel; // insere no vetor
+
+                  return;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  //verificar se esta cheia - fazer
+
 }
 
 
 //Imprimir
 void imprimir(Lista **lista){
-  int aux = (*lista)->primeiro;
-  for (int i = 0; i < (*lista)->posicao; i++){
-    imprimeProcesso((*lista)-> vetor[i].processo); // imprime desordenado
-    //imprimeProcesso((*lista)-> vetor[aux].processo); // imprime ordenado
-    aux = (*lista)-> vetor[aux].prox;
+  int posicao = (*lista)->primeiro;
+
+  while (true){
+    imprimeProcesso((*lista)-> vetor[posicao].processo);
+    posicao = (*lista)-> vetor[posicao].prox;
+    if (posicao == -1){
+      break;
+    }
   }
+
+  /*for (int i = 0; i < (*lista)->tam; i++){
+    if ((*lista)->vetor[i].posicaoVazia == 1){
+      imprimeProcesso((*lista)-> vetor[i].processo);
+    }
+
+  }*/
+
   printf("\n");
 }
 
 //Celulas ocupadas
 int celulas_ocupadas(Lista **lista){
-  return (*lista)->posicao;
+  int cont = 0;
+  for (int i = 0; i < (*lista)->tam; i++){
+    if ((*lista)->vetor[i].posicaoVazia == 1){
+      cont++;
+    }
+  }
+  return cont;
 }
+
 
 //Remove no inicio
-Lista* remove_primeiro(Lista **lista){
-  if ((*lista) -> vazia = true)
-    printf("Lista vazia!%n");
-  
-  Celula *cel;
+void remove_primeiro(Lista **lista){
+  // setando a primeira posicao como vazia
+  (*lista)->vetor[(*lista)->primeiro].posicaoVazia = 0;
 
-  cel = (*lista)->vetor;
-  int aux;
+  // o cursor anterior da proxima celula agora aponta pra -1
+  (*lista)->vetor[(*lista)->vetor[(*lista)->primeiro].prox].ant = -1;
 
-  if ((*lista) -> tam > 1){
-    aux = (*lista)-> vetor[(*lista)->primeiro].prox;
-    (*lista)-> vetor[aux].ant = -1;
-    (*lista)->primeiro = aux;
-  }
+  // primeiro agora é proxima celula
+  (*lista)->primeiro = (*lista)->vetor[(*lista)->primeiro].prox;
 
-  free (cel);
-  (*lista) -> tam--;
-}
-
-/*
-//Verifica se a lista está vazia
-bool verifica_lista_vazia(Lista *lista){
-  return (lista -> tam == 0);
 }
 
 
-
-//Insere ordenado
-void insere_ordenado(Lista *lista, Processo processo){
-  Celula *apontador, *celula = (Celula*) malloc(sizeof(Celula));
-
-    celula -> processo = processo;
-    if(verifica_lista_vazia (lista)){
-      celula -> prox = NULL;
-      lista -> inicio = celula;
-  }
-    else if(celula -> processo.pid < lista -> inicio -> processo.pid){
-      celula -> prox = lista -> inicio;
-      (lista -> inicio) -> ant = celula;
-      lista -> inicio = celula;
-    }
-    else{
-      apontador = lista -> inicio;
-
-      while(apontador -> prox && celula -> processo.pid > apontador -> prox -> processo.pid){
-        apontador = apontador -> prox;
-      }
-
-      celula -> prox = apontador -> prox;
-      apontador -> prox -> ant = celula;
-      celula -> ant = apontador;
-      apontador -> prox = celula;
-    }
-    lista -> tam++;
-}
-
-//Tamanho da lista
-int *celulas_ocupadas(Lista *lista){
-  printf("%d", lista -> tam);
-}*/

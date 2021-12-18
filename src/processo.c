@@ -1,7 +1,8 @@
 #include "processo.h"
 #include <time.h>
 
-void createProcess(Processo *processo){
+void createProcess(Processo *processo, int num){
+    //processo->pid = num;
     setPid(processo);
     setPrioridade(processo);
     setHoras(processo);

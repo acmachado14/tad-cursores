@@ -7,7 +7,7 @@ typedef struct {
     char horas[5];
 } Processo;
 
-void createProcess(Processo *processo);
+void createProcess(Processo *processo, int num);
 
 void imprimeProcesso(Processo *processo);
 
