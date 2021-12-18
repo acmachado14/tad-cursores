@@ -10,24 +10,21 @@ void criar_lista(Lista **lista,int tamanho){
   (*lista) -> vetor = v;
   (*lista) -> vazia = true;
   (*lista) -> posicao = 0;
-  (*lista) -> tam = 0;
+  (*lista) -> tam = tamanho;
 }
 
 void insere_no_inicio(Lista **lista, Processo *processo){
-  /*for (int i = 0; i < 10; i++){
-    printf("teste");
-    printf("\n");
-  }*/
-  Celula *cel;
+
+  Celula *cel = (Celula*) malloc(sizeof(Celula));
   cel->processo = processo;
-  if ((*lista)->vazia == true){
-    cel->ant = -1;
-    cel->prox = -1;
+
+  if ((*lista)->vazia == true){  
     (*lista)->vetor[(*lista)->posicao] = *cel;
     (*lista)->vazia = false;
     (*lista)->ultimo = (*lista)->posicao;
     (*lista)->primeiro = (*lista)->posicao;
   }else{
+    (*lista)->vetor[(*lista)->posicao];
     cel->ant = (*lista)->posicao;
     cel->prox = -1;
     (*lista)->vetor[(*lista)->posicao] = *cel;
@@ -36,24 +33,6 @@ void insere_no_inicio(Lista **lista, Processo *processo){
   (*lista)->posicao++;
   (*lista)->tam++;
   puts("");
-}
-      // Código para ordenação do vetor (Não testado) Erro ao definir função na lista.h
-void ordena(int *vetor, int *tam){
-  
-  int primeiro, j, menor, troca;
-  for (primeiro = 0; primeiro < tam-1; primeiro++){
-    menor = primeiro;
-    for (j = primeiro+1; j < tam-1 ; j++){
-      if(vetor[j] < vetor[menor]){
-        menor = j;
-      }
-    if (primeiro != menor){
-      troca = vetor[primeiro];
-      vetor[primeiro] = vetor[menor];
-      vetor[menor] = troca;
-    }
-    }
-  }
 }
 
 //Imprimir
