@@ -23,7 +23,7 @@ void criar_lista(Lista **lista,int tamanho){
 
 }
 
-void insere_no_inicio(Lista **lista, Processo *processo){
+void insere_no_inicio(Lista **lista, Processo processo){
 
   Celula *cel = (Celula*) malloc(sizeof(Celula));
   cel->processo = processo;
@@ -41,7 +41,7 @@ void insere_no_inicio(Lista **lista, Processo *processo){
     (*lista)->vazia = false; //lista nao esta mais vazia
   }else{
     //verificar se vai ser o ultimo
-    if (processo->pid >= (*lista)->vetor[posicaoDoUltimo].processo->pid){ //entao é o maior
+    if (processo.pid >= (*lista)->vetor[posicaoDoUltimo].processo.pid){ //entao é o maior
 
       for (int i = 0; i < (*lista)->tam; i++){
         if ((*lista)->vetor[i].posicaoVazia == 0){
@@ -57,7 +57,7 @@ void insere_no_inicio(Lista **lista, Processo *processo){
           break;
         }
       }
-    }else if (processo->pid <= (*lista)->vetor[posicaoDoPrimeiro].processo->pid){ //entao é o menor
+    }else if (processo.pid <= (*lista)->vetor[posicaoDoPrimeiro].processo.pid){ //entao é o menor
 
       for (int i = 0; i < (*lista)->tam; i++){
         if ((*lista)->vetor[i].posicaoVazia == 0){
@@ -76,13 +76,13 @@ void insere_no_inicio(Lista **lista, Processo *processo){
   }
 
   if((*lista)->vazia == false){
-    if (processo->pid < (*lista)->vetor[(*lista)->ultimo].processo->pid){
-      if (processo->pid > (*lista)->vetor[(*lista)->primeiro].processo->pid){
+    if (processo.pid < (*lista)->vetor[(*lista)->ultimo].processo.pid){
+      if (processo.pid > (*lista)->vetor[(*lista)->primeiro].processo.pid){
         int c;
         for (int i = 0; i < (*lista)->tam; i++){
           if ((*lista)->vetor[i].posicaoVazia == 1){
             int anterior = (*lista)->vetor[i].ant;
-            if ((processo->pid <= (*lista)->vetor[i].processo->pid) && (processo->pid >= (*lista)->vetor[anterior].processo->pid)){
+            if ((processo.pid <= (*lista)->vetor[i].processo.pid) && (processo.pid >= (*lista)->vetor[anterior].processo.pid)){
               for (int j = 0; j < (*lista)->tam; j++){
                 if ((*lista)->vetor[j].posicaoVazia == 0){
 
@@ -118,20 +118,15 @@ void insere_no_inicio(Lista **lista, Processo *processo){
 void imprimir(Lista **lista){
   int posicao = (*lista)->primeiro;
 
-  while (true){
-    imprimeProcesso((*lista)-> vetor[posicao].processo);
-    posicao = (*lista)-> vetor[posicao].prox;
-    if (posicao == -1){
-      break;
+  if ((*lista)->vazia == false){
+    while (true){
+      imprimeProcesso(&((*lista)-> vetor[posicao].processo));
+      posicao = (*lista)-> vetor[posicao].prox;
+      if (posicao == -1){
+        break;
+      }
     }
   }
-
-  /*for (int i = 0; i < (*lista)->tam; i++){
-    if ((*lista)->vetor[i].posicaoVazia == 1){
-      imprimeProcesso((*lista)-> vetor[i].processo);
-    }
-
-  }*/
 
   printf("\n");
 }
@@ -150,6 +145,9 @@ int celulas_ocupadas(Lista **lista){
 
 //Remove no inicio
 void remove_primeiro(Lista **lista){
+  if ((*lista)->vazia == true){
+    return;
+  }
   // setando a primeira posicao como vazia
   (*lista)->vetor[(*lista)->primeiro].posicaoVazia = 0;
 
@@ -158,6 +156,17 @@ void remove_primeiro(Lista **lista){
 
   // primeiro agora é proxima celula
   (*lista)->primeiro = (*lista)->vetor[(*lista)->primeiro].prox;
+
+  int cont = 0;
+  for (int i = 0; i < (*lista)->tam; i++){
+    if ((*lista)->vetor[i].posicaoVazia == 1){
+      cont++;
+    }
+  }
+
+  if (cont == 0){
+    (*lista)->vazia = true;
+  }
 
 }
 

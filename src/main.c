@@ -1,84 +1,99 @@
 #include "lista.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
+
+Processo aleatorio(){
+    Processo processo;
+    int pid, prioridade;
+    char convertido[16];
+    time_t my_time;
+    struct tm * timeinfo;
+    time (&my_time);
+    timeinfo = localtime (&my_time);
+    float hora = timeinfo->tm_hour;
+    float minutos = timeinfo->tm_min;
+    sprintf(convertido, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);
+    pid = (rand() % 1000); // pegar pid aleatorio
+    prioridade = ((rand() % 5) + (1)); //pegar prioridae aleatoria
+
+    createProcess(&processo, pid, prioridade, convertido);
+
+    return processo;
+}
 
 int main(){
-    Processo p1;
-    Processo p2;
-    Processo p3;
-    Processo p4;
-    Processo p5;
-    Processo p6;
-    Processo p7;
-
-    createProcess(&p1, 5);
-
-    createProcess(&p2, 89);
-
-    createProcess(&p3, 2);
-
-    createProcess(&p4, 50);
-
-    createProcess(&p5, 15);
-
-    createProcess(&p6, 7);
-
-    createProcess(&p7, 90);
-
-    int N = 10, linhas;
+    srand(time(NULL));
     Lista *lista;
-    criar_lista(&lista,N);
-
-
-    insere_no_inicio(&lista, &p1);
-    insere_no_inicio(&lista, &p2);
-    insere_no_inicio(&lista, &p3);
-    insere_no_inicio(&lista, &p4);
-    insere_no_inicio(&lista, &p5);
-    insere_no_inicio(&lista, &p6);
-    insere_no_inicio(&lista, &p7);
-
-    remove_primeiro(&lista);
-    imprimir(&lista);
-    puts("----------------------------------------------------------------");
-    printf("Numero de celulas ocupadas: %d",celulas_ocupadas(&lista));
-
-    insere_no_inicio(&lista, &p3);
-
-    imprimir(&lista);
-    puts("----------------------------------------------------------------");
-    printf("Numero de celulas ocupadas: %d",celulas_ocupadas(&lista));
-
-
-
-
-/*
+    Processo p;
 
     //ler N
     //ler NOL numero de linhas de operacoes
     //Op 0 para insercao e 1 para remocao INICIO
     //Qt quantidade de vezes que a operacao sera realizada
 
+    FILE *fp;
+    FILE *fpSaida;
 
-    scanf("%d", N); //tamanho
-    scanf("%d", NOL); //numero de linhas
+    char* str1 = "../testes/";
+    char* str2 = ".txt";
+    char* str3 = "_resultado.txt";
+    char teste[46];
+    char buffer[50];
+    char buffer2[50];
 
-    int j = 0, Op, Qt;
+    printf("Digite o nome do teste a ser executado na pasta de testes: \n");
+    scanf("%s", &teste);
+
+    strcat(strcpy(buffer, str1), teste);
+
+    strcpy(buffer2, buffer);
+
+    strcat(strcpy(buffer, buffer), str2);
+
+    fp = fopen(buffer,"r");
+
+    strcat(strcpy(buffer2, buffer2), str3);
+
+    fpSaida = fopen(buffer2,"w");
+
+    clock_t start, end;
+    double cpu_time_used;
+
+    int j = 0, Op, Qt, NOL, N;
+
+    fscanf(fp,"%d", &N); // tamanho
+
+    fscanf(fp,"%d", &NOL); //numero de linhas
+
+    criar_lista(&lista,N);
+
+    start = clock();
     while ( j < NOL ){
-        scanf("%d %d", Op, Qt);
+        fscanf(fp,"%d %d", &Op, &Qt);
         if(Op == 0){ //insercao
             for (int i = 0; i < Qt; i ++){
-                //insere_no_inicio(&lista, &p3);
+                p = aleatorio();
+                insere_no_inicio(&lista, p);
             }
         }else{ //remocao
             for (int i = 0; i < Qt; i ++){
-                //remove_inicio(&lista);
+                remove_primeiro(&lista);
             }
         }
         j++;
     }
-*/
 
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+    fclose(fp);
+    puts("----------------------------------------------------------------");
+    printf("Tempo de execucao: %f",cpu_time_used);
+    puts("\n");
+
+    fprintf(fpSaida, "Nome/Numero do teste: %s Tempo de execucao: %f ", teste, cpu_time_used);
+    fclose(fpSaida);
     return 0;
 
 

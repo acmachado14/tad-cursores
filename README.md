@@ -11,3 +11,5 @@ Trabalho pra disciplina de Algoritmos e Estrutura de Dados 1 - UFV
 * [x] Retirar o primeiro item da área de memória.
 * [x] Imprimir o conteúdo da área de memória. Somente imprime o conteúdo das células
 ocupadas.
+* [x] Testes
+* [ ] Revisar tudo!! Pente fino
