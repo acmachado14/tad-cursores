@@ -1,10 +1,10 @@
 #include "processo.h"
 #include <time.h>
 
-void createProcess(Processo *processo){
-    setPid(processo);
-    setPrioridade(processo);
-    setHoras(processo);
+void createProcess(Processo *processo, int pid, int prioridade, char hora[16]){
+    setPid(processo, pid);
+    setPrioridade(processo, prioridade);
+    setHoras(processo, hora);
 }
 
 void imprimeProcesso(Processo *processo) {
@@ -15,8 +15,9 @@ void imprimeProcesso(Processo *processo) {
 }
 
 //gera e seta um numero aleatorio de 0 a 1000
-void setPid(Processo *processo) {
-    processo->pid = (rand() % 1000);
+void setPid(Processo *processo, int pid) {
+    processo->pid = pid;
+    //processo->pid = (rand() % 1000);
 }
 
 int getPid(Processo *processo) {
@@ -24,8 +25,9 @@ int getPid(Processo *processo) {
 }
 
 //gera um numero aleatorio de 0 a 5
-void setPrioridade(Processo *processo) {
-    processo->prioridade = ((rand() % 5) + (1));
+void setPrioridade(Processo *processo, int prioridade) {
+    processo->prioridade = prioridade;
+    //processo->prioridade = ((rand() % 5) + (1));
 }
 
 int getPrioridade(Processo *processo) {
@@ -33,8 +35,8 @@ int getPrioridade(Processo *processo) {
 }
 
 //pega a hora atual
-void setHoras(Processo *processo) {
-    time_t my_time;
+void setHoras(Processo *processo, char hora[16]) {
+    /*time_t my_time;
     struct tm * timeinfo;
     time (&my_time);
     timeinfo = localtime (&my_time);
@@ -42,9 +44,9 @@ void setHoras(Processo *processo) {
     float minutos = timeinfo->tm_min;
     char convertido[16];
 
-    sprintf(convertido, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);
+    sprintf(convertido, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);*/
 
-    strcpy(processo->horas, convertido);
+    strcpy(processo->horas, hora);
 }
 
 char* getHoras(Processo *processo) {

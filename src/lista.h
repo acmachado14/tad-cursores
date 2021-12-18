@@ -7,9 +7,10 @@
 //Struct da Celula -> Para representarmos um Nó da lista
 
 typedef struct Celula{
-  Processo *processo;
+  Processo processo;
   int prox;     //cursor para proximo
   int ant;      //cursor para anterior
+  int posicaoVazia; // 0 - vazia | 1 - preenchida
 } Celula;
 
 //Struct da lista
@@ -20,7 +21,7 @@ typedef struct{
 }Lista;
 
 
-void insere_no_inicio(Lista **lista, Processo *processo);
+void insere_no_inicio(Lista **lista, Processo processo);
 
 //a) Criar uma área de memória interna vazia. Aloca um vetor de células de tamanho N. Vamos utilizar alocação dinâmica deste vetor, devido aos altos valores de N que adotaremos;
 void criar_lista(Lista **lista,int tamanho);

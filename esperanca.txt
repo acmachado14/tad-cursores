@@ -1,0 +1,37 @@
+
+
+
+
+
+1- $a é o maior
+    //sim
+        entao ele eh o maior valor, e o anterior do $a recebe o indice do $ultimo e
+        o proximo do $ultimo recebe o indece do $a
+
+        proximo de $a = -1
+        $ultimo = posicao de $a
+    //nao
+        $a é o menor?
+            //sim
+                entao ele eh o menor valor, e o proximo do $a recebe o indice do $primeiro e
+                o anterior do $primeiro recebe o indece do $a
+
+                anterior de $a = -1
+                $primeiro = posicao de $a
+            //nao
+                2 - $b == valor a ser comparado
+                pega o valor do $b.
+                tem algum valor entre o $a e o $b?
+                //sim
+                    pega esse valor $c e volta para o item 2.
+                //nao
+                    anterior de $b recebe a posicao $a e o proximo de $a recebe
+                    a posicao de $b
+
+                    c = v[$b->proximo] // aponta pra c
+
+                    proximo de $b recebe posicao de $a,
+                    anterior de $a recebe a posicao de $b,
+                    proximo de $a recebe $b->proximo,
+
+                    v[c]->anterior = posicao de $a,
