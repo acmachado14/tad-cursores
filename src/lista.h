@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include "processo.h"
 
-//Struct da Celula -> Para representarmos um Nó da lista
-
 typedef struct Celula{
   Processo processo;
   int prox;     //cursor para proximo
@@ -15,13 +13,13 @@ typedef struct Celula{
 
 //Struct da lista
 typedef struct{
-    int tam, primeiro, ultimo, posicao;
-    bool vazia;
-    Celula *vetor;
+    int tam; //tamanho do vetor
+    int primeiro; //aponta pro indice do primeiro termo
+    int ultimo; //aponta pro indice do ultimo termo
+    bool vazia; //true - esta vazia | false - nao esta vazia
+    Celula *vetor; //vetor de celulas
 }Lista;
 
-
-void insere_no_inicio(Lista **lista, Processo processo);
 
 //a) Criar uma área de memória interna vazia. Aloca um vetor de células de tamanho N. Vamos utilizar alocação dinâmica deste vetor, devido aos altos valores de N que adotaremos;
 void criar_lista(Lista **lista,int tamanho);
@@ -30,21 +28,11 @@ void criar_lista(Lista **lista,int tamanho);
 int celulas_ocupadas(Lista **lista);
 
 //c) Inserir um item de dado na área interna de memória, mantendo os itens ordenados;
-void insere_ordenado(Lista *lista, Processo processo);
+void insere_no_inicio(Lista **lista, Processo processo);
 
 //d) Retirar o primeiro item da área de memória;
 void remove_primeiro(Lista **lista);
 
-
-/*
-//Insere no inicio
-void inseri_no_inicio(Lista *lista, Processo processo);
-*/
-
-
-
 //f) Imprimir o conteúdo da área de memória. Somente imprime o conteúdo das células ocupadas.
 void imprimir(Lista **lista);
 
-//Verifica se alista estar vazia
-bool verifica_lista_vazia(Lista *lista);

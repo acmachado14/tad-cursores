@@ -18,11 +18,11 @@ void criar_lista(Lista **lista,int tamanho){
 
   (*lista) -> vetor = v;
   (*lista) -> vazia = true;
-  (*lista) -> posicao = 0;
   (*lista) -> tam = tamanho;
 
 }
 
+//inserir ordenado (com cursor) na proxima posicao vazia
 void insere_no_inicio(Lista **lista, Processo processo){
 
   Celula *cel = (Celula*) malloc(sizeof(Celula));
@@ -33,6 +33,7 @@ void insere_no_inicio(Lista **lista, Processo processo){
   int posicaoDoUltimo = (*lista)->ultimo;
   int posicaoDoPrimeiro = (*lista)->primeiro;
 
+  //verificar se lista esta vazia
   if ( (*lista)->vazia == true){
     (*lista)->vetor[0] = *cel;
     (*lista)->primeiro = 0;
@@ -57,6 +58,7 @@ void insere_no_inicio(Lista **lista, Processo processo){
           break;
         }
       }
+    //verificar se vai ser o primeiro
     }else if (processo.pid <= (*lista)->vetor[posicaoDoPrimeiro].processo.pid){ //entao é o menor
 
       for (int i = 0; i < (*lista)->tam; i++){
@@ -86,7 +88,7 @@ void insere_no_inicio(Lista **lista, Processo processo){
               for (int j = 0; j < (*lista)->tam; j++){
                 if ((*lista)->vetor[j].posicaoVazia == 0){
 
-                  cel->posicaoVazia = 1; // cola a posicao como preenchida
+                  cel->posicaoVazia = 1; // coloca a posicao como preenchida
 
                   c = (*lista)->vetor[i].ant; // pegando a posicao de $c (proximo de $b)
 
@@ -109,12 +111,13 @@ void insere_no_inicio(Lista **lista, Processo processo){
       }
     }
   }
-  //verificar se esta cheia - fazer
+  //Verificar se esta cheia nao precisa fazer pois o codigo vai inserir somente se existir uma posicao vazia no vetor
+  //se nao existir ele nem insere!!
 
 }
 
 
-//Imprimir
+//Imprimir ordenando com cursores
 void imprimir(Lista **lista){
   int posicao = (*lista)->primeiro;
 
@@ -157,6 +160,7 @@ void remove_primeiro(Lista **lista){
   // primeiro agora é proxima celula
   (*lista)->primeiro = (*lista)->vetor[(*lista)->primeiro].prox;
 
+  // verificar se apos a remocao a lista ficou vazia
   int cont = 0;
   for (int i = 0; i < (*lista)->tam; i++){
     if ((*lista)->vetor[i].posicaoVazia == 1){
