@@ -1,1 +1,1 @@
-Nome/Numero do teste: testeInicial Tempo de execucao: 0.209000 
+Nome/Numero do teste: testeInicial Tempo de execucao: 0.223000 

@@ -4,7 +4,7 @@
 typedef struct {
     int pid;
     int prioridade;
-    char horas[5];
+    char horas[16];
 } Processo;
 
 void createProcess(Processo *processo, int PID, int prioridade, char hora[16]);

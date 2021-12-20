@@ -28,7 +28,7 @@ void criar_lista(Lista **lista,int tamanho);
 int celulas_ocupadas(Lista **lista);
 
 //c) Inserir um item de dado na área interna de memória, mantendo os itens ordenados;
-void insere_no_inicio(Lista **lista, Processo processo);
+void insereOrdenado(Lista **lista, Processo processo);
 
 //d) Retirar o primeiro item da área de memória;
 void remove_primeiro(Lista **lista);

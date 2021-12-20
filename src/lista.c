@@ -23,7 +23,7 @@ void criar_lista(Lista **lista,int tamanho){
 }
 
 //inserir ordenado (com cursor) na proxima posicao vazia
-void insere_no_inicio(Lista **lista, Processo processo){
+void insereOrdenado(Lista **lista, Processo processo){
 
   Celula *cel = (Celula*) malloc(sizeof(Celula));
   cel->processo = processo;
