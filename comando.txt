@@ -1,4 +1,4 @@
-Rode na pasta principal do projeto os seguintes comandos:
+Rode na pasta raiz do projeto os seguintes comandos:
 
 cd src
 gcc processo.c main.c lista.c
