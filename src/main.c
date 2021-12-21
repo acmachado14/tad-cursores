@@ -4,22 +4,12 @@
 #include <time.h>
 
 //Cria um processo com valores aleatorios (PID e Prioridade) e Hora atual do computador
-Processo aleatorio(){
+Processo aleatorio(char horaAtual[16]){
     Processo processo;
     int pid, prioridade;
-    char convertido[16];
-    time_t my_time;
-    struct tm * timeinfo;
-    time (&my_time);
-    timeinfo = localtime (&my_time);
-    float hora = timeinfo->tm_hour;
-    float minutos = timeinfo->tm_min;
-    sprintf(convertido, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);
     pid = (rand() % 1000); // pegar pid aleatorio
     prioridade = ((rand() % 5) + (1)); //pegar prioridae aleatoria
-
-    createProcess(&processo, pid, prioridade, convertido);
-
+    createProcess(&processo, pid, prioridade, horaAtual); // construct
     return processo;
 }
 
@@ -27,6 +17,18 @@ int main(){
     srand(time(NULL));
     Lista *lista;
     Processo p;
+
+    char horaAtual[16];
+    time_t my_time;
+    struct tm * timeinfo;
+    time (&my_time);
+    timeinfo = localtime (&my_time);
+    float hora = timeinfo->tm_hour;
+    float minutos = timeinfo->tm_min;
+
+    //converte hora pra char
+    sprintf(horaAtual, "%d%s%d", timeinfo->tm_hour,":",timeinfo->tm_min);
+
 
 // ------------------------------------Leitura do Arquivo------------------------------------------
     FILE *fp;
@@ -70,38 +72,39 @@ int main(){
 
 // -----------------------------------------Iniciar tempo de execucao-----------------------------------------------
     clock_t start, end;
-    double cpu_time_used;
+    double timeUsed;
     start = clock();
 // ----------------------------------------------------------------------------------------------------------------
     while ( j < NOL ){
         fscanf(fp,"%d %d", &Op, &Qt);
         if(Op == 0){ //insercao
             for (int i = 0; i < Qt; i ++){
-                p = aleatorio();
+                p = aleatorio(horaAtual);
                 insereOrdenado(&lista, p);
             }
         }else{ //remocao
             for (int i = 0; i < Qt; i ++){
-                remove_primeiro(&lista);
+                removePrimeiro(&lista);
             }
         }
         j++;
     }
 
+    end = clock();
+
     imprimir(&lista);
 
-    end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    timeUsed = ((double) (end - start)) / CLOCKS_PER_SEC;
 
     fclose(fp); //fecha arquivo
     puts("----------------------------------------------------------------");
-    printf("Tempo de execucao: %f",cpu_time_used);
+    printf("Tempo de execucao: %f",timeUsed);
     puts("\n");
 
     // -----------------------------------------Fechar tempo de execucao-----------------------------------------------
 
     // -------------------------------------Armazenar dados nos arquivos-----------------------------------------------
-    fprintf(fpSaida, "Nome/Numero do teste: %s Tempo de execucao: %f ", teste, cpu_time_used);
+    fprintf(fpSaida, "Nome/Numero do teste: %s Tempo de execucao: %f ", teste, timeUsed);
     fclose(fpSaida); //fecha arquivo
     return 0;
 

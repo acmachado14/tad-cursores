@@ -25,13 +25,13 @@ typedef struct{
 void criar_lista(Lista **lista,int tamanho);
 
 //b) Obter o número de células ocupadas na área de memória. Retorna o número de posições ocupadas no vetor;
-int celulas_ocupadas(Lista **lista);
+int celulasOcupadas(Lista **lista);
 
 //c) Inserir um item de dado na área interna de memória, mantendo os itens ordenados;
 void insereOrdenado(Lista **lista, Processo processo);
 
 //d) Retirar o primeiro item da área de memória;
-void remove_primeiro(Lista **lista);
+void removePrimeiro(Lista **lista);
 
 //f) Imprimir o conteúdo da área de memória. Somente imprime o conteúdo das células ocupadas.
 void imprimir(Lista **lista);

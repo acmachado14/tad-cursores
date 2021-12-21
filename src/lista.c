@@ -9,10 +9,10 @@ void criar_lista(Lista **lista,int tamanho){
   Celula *v = (Celula*) malloc(tamanho * sizeof(Celula));
 
   Celula *cel = (Celula*) malloc(sizeof(Celula));
+  cel->ant = -1;
+  cel->prox = -1;
+  cel->posicaoVazia = 0;
   for (int i = 0; i < tamanho; i++){
-    cel->ant = -1;
-    cel->prox = -1;
-    cel->posicaoVazia = 0;
     v[i] = *cel;
   }
 
@@ -90,7 +90,7 @@ void insereOrdenado(Lista **lista, Processo processo){
 
                   cel->posicaoVazia = 1; // coloca a posicao como preenchida
 
-                  c = (*lista)->vetor[i].ant; // pegando a posicao de $c (proximo de $b)
+                  c = (*lista)->vetor[i].ant; // pegando a posicao de $c (anterior de $b)
 
                   (*lista)->vetor[i].ant = j; //anterior de $b recebe $a
 
@@ -135,7 +135,7 @@ void imprimir(Lista **lista){
 }
 
 //Celulas ocupadas
-int celulas_ocupadas(Lista **lista){
+int celulasOcupadas(Lista **lista){
   int cont = 0;
   for (int i = 0; i < (*lista)->tam; i++){
     if ((*lista)->vetor[i].posicaoVazia == 1){
@@ -147,7 +147,7 @@ int celulas_ocupadas(Lista **lista){
 
 
 //Remove no inicio
-void remove_primeiro(Lista **lista){
+void removePrimeiro(Lista **lista){
   if ((*lista)->vazia == true){
     return;
   }
